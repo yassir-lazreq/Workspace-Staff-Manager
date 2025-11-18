@@ -16,11 +16,11 @@
 
         <div class="modal-content">
             <h2 class="modal-title">Ajouter un nouvel employé</h2>
-            <form action="main.js" class="form">
+            <form name="formulaire" class="form" id="formulaire">
 
                 <div>
                     <label for="nom" class="label">nom complet</label><br>
-                    <input type="text" placeholder="nom complet" class="input-field">
+                    <input type="text" id="nom" name="nom" placeholder="nom complet" class="input-field">
                 </div>
 
                 <div>
@@ -36,12 +36,12 @@
 
                 <div>
                     <label for="email" class="label">email</label><br>
-                    <input type="email" placeholder="email" class="input-field">
+                    <input type="email" id="email" name="email" placeholder="email" class="input-field">
                 </div>
 
                 <div>
                     <label for="telephone" class="label">téléphone</label><br>
-                    <input type="tel" placeholder="téléphone" class="input-field">
+                    <input type="tel" id="telephone" name="telephone" placeholder="téléphone" class="input-field">
                 </div>
 
                 <div>
@@ -52,7 +52,7 @@
                 <div>
                     <div class="experience-header">
                         <label for="Expériences professionnelles" class="label">Expériences professionnelles</label>
-                        <button class="add-experiance-btn">+ Ajouter une experience</button>
+                        <button type="button" class="add-experiance-btn">+ Ajouter une experience</button>
                     </div>
                     <div class="experiences-div">
                         <input type="text" placeholder="Entreprise" id="Experiences" name="experiences" class="input-experience">
@@ -60,7 +60,7 @@
                         <input type="text" placeholder="periode(2020 - 2025)" id="periode" name="periode" class="input-experience">
                     </div>
                 </div>
-
+                <button type="submit" class="Ajouter-employer" id="Ajouter-employer">Ajouter</button>
             </form>
         </div>
     </div>
