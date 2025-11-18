@@ -23,16 +23,17 @@ addExperianceBtn.addEventListener('click', () => {
     experiencesDiv.appendChild(newExperienceDiv);
 
     const newEntreprise = document.createElement("input");
-    newEntreprise.classList = "input-experience";
+    newEntreprise.classList.add("input-experience", "entreprise");
     newEntreprise.placeholder = "Entreprise";
 
     const newPost = document.createElement("input");
-    newPost.classList = "input-experience";
+    newPost.classList.add("input-experience", "poste");
     newPost.placeholder = "Poste";
 
     const newDuree = document.createElement("input");
-    newDuree.classList = "input-experience";
+    newDuree.classList.add("input-experience", "duree");
     newDuree.placeholder = "Période (ex: 2020 - 2025)";
+
 
     newExperienceDiv.appendChild(newEntreprise);
     newExperienceDiv.appendChild(newPost);
@@ -43,19 +44,36 @@ addExperianceBtn.addEventListener('click', () => {
 formulaire.addEventListener('submit', (e) => {
     e.preventDefault();
     let experiencesArray = [];
-    
+
     const nom = document.getElementById("nom").value;
     const role = document.getElementById("role").value;
     const email = document.getElementById("email").value;
     const telephone = document.getElementById("telephone").value;
     const img = document.getElementById("img").files[0];
 
-    const experience = {
-        entreprise: document.getElementById("Experience").value,
-        poste: document.getElementById("Poste").value,
-        duree: document.getElementById("Duree").value
-    }
-    experiencesArray.push(experience);
+    const experienceRows = document.querySelectorAll(".experiences-div");
+
+    experienceRows.forEach(row => {
+        const entrepriseInput = row.querySelector(".entreprise");
+        const posteInput = row.querySelector(".poste");
+        const dureeInput = row.querySelector(".duree");
+
+        if (
+            entrepriseInput.value.trim() === "" &&
+            posteInput.value.trim() === "" &&
+            dureeInput.value.trim() === ""
+        ) {
+            return;
+        }
+
+        const experience = {
+            entreprise: entrepriseInput.value,
+            poste: posteInput.value,
+            duree: dureeInput.value
+        };
+
+        experiencesArray.push(experience);
+    });
 
     const department = null;
 
@@ -65,7 +83,7 @@ formulaire.addEventListener('submit', (e) => {
         email: email,
         telephone: telephone,
         img: img,
-        experience: experiencesArray,
+        experiences: experiencesArray,
         department: department
     }
     employeeArray.push(employee);
