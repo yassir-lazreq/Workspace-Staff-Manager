@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workspace</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="addContainer" class="hidden add-container">
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-content">
+            <h2 class="modal-title">Ajouter un nouvel employé</h2>
+            <form action="main.js" class="form">
+
+                <div>
+                    <label for="nom" class="label">nom complet</label><br>
+                    <input type="text" placeholder="nom complet" class="input-field">
+                </div>
+
+                <div>
+                    <label for="role" class="label">Role</label><br>
+                    <select name="role" id="role" class="input-select">
+                        <option value="manager">Manager</option>
+                        <option value="receptionniste">Réceptionniste</option>
+                        <option value="technicien IT">Technicien IT</option>
+                        <option value="agent Securite">Agent Sécurité</option>
+                        <option value="Nettoyage">Nettoyage</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="email" class="label">email</label><br>
+                    <input type="email" placeholder="email" class="input-field">
+                </div>
+
+                <div>
+                    <label for="telephone" class="label">téléphone</label><br>
+                    <input type="tel" placeholder="téléphone" class="input-field">
+                </div>
+
+                <div>
+                    <label for="img" class="label">photo</label><br>
+                    <input type="file" id="img" name="img" class="input-file">
+                </div>
+
+                <!-- <div>
+                    <label for="name" class="label">nom</label>
+                    <input type="text" placeholder="name" class="input-field">
+                </div> -->
+
+            </form>
+        </div>
+    </div>
+
+    <header class="header-main">
+        <h1 class="header-title">Workspace</h1>
+    </header>
+
+    <main class="main-layout">
+
+        <section class="sidebar">
+
+            <div class="sidebar-header">
+                <img src="assets/users.png" alt="employee icon" class="icon-employee">
+                <h2 class="section-title">Employés non assignés</h2>
+            </div>
+
+            <button id="ajouter" class="primary-button">
+                ajouter un employé +
+            </button>
+
+            <div id="unassined" class="unassigned-list">
+                <!-- Liste des employés non assignés -->
+            </div>
+
+        </section>
+
+        <div id="departments" class="departments-container">
+
+            <div id="salleConference" class="department-card salleConference">
+                <div class="department-header">
+                    <h4 class="department-title">Salle des serveurs</h4>
+                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus"
+                        id="addEmployeeToDepartment">
+                </div>
+            </div>
+
+            <div id="reception" class="department-card reception">
+                <div class="department-header">
+                    <h4 class="department-title">Réception</h4>
+                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus"
+                        id="addEmployeeToDepartment">
+                </div>
+            </div>
+
+            <div id="salleServeur" class="department-card salleServeur">
+                <div class="department-header">
+                    <h4 class="department-title">Salle des serveurs</h4>
+                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus"
+                        id="addEmployeeToDepartment">
+                </div>
+            </div>
+
+            <div id="salleSecurite" class="department-card salleSecurite">
+                <div class="department-header">
+                    <h4 class="department-title">Salle des Securite</h4>
+                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus"
+                        id="addEmployeeToDepartment">
+                </div>
+            </div>
+
+            <div id="sallePersonnel" class="department-card sallePersonnel">
+                <div class="department-header">
+                    <h4 class="department-title">Salle des personnel</h4>
+                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus"
+                        id="addEmployeeToDepartment">
+                </div>
+            </div>
+
+            <div id="salleArchives" class="department-card salleArchives">
+                <div class="department-header">
+                    <h4 class="department-title">Salle des archives</h4>
+                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus"
+                        id="addEmployeeToDepartment">
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
