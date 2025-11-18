@@ -1,19 +1,65 @@
 const addBtn = document.getElementById("ajouter");
 const addContainer = document.getElementById("addContainer");
-const modalOverlay = document.querySelector(".modal-overlay");
+const modalOverlay = document.querySelectorAll(".modal-overlay");
 const formulaire = document.getElementById("formulaire");
 const addExperianceBtn = document.getElementById("addExperianceBtn");
 const unassinedList = document.getElementById("unassined");
+const addEmployeeToDepartmentBtns = document.querySelectorAll(".icon-plus");
+const employeeListContainer = document.getElementById("employeeList");
+const departmentEmployeeList = document.getElementById("departmentEmployeeList");
 
 let experienceCount = 1;
 let employeeArray = [];
 
+modalOverlay.forEach(overlay => {
+    overlay.addEventListener('click', () => {
+        addContainer.className = "hidden";
+        employeeListContainer.className = "hidden";
+    });
+});
+
+addEmployeeToDepartmentBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        employeeListContainer.className = "add-container";
+        departmentEmployeeList.innerHTML = "";
+        employeeArray.forEach(employee => {
+            if (employee.department === null) {
+                const employeediv = document.createElement("div");
+                employeediv.classList.add("employee-div");
+                departmentEmployeeList.appendChild(employeediv);
+
+                const empProfile = document.createElement("img");
+                empProfile.src = URL.createObjectURL(employee.img);
+                empProfile.alt = "Profile Picture";
+                empProfile.classList.add("employee-profile");
+                employeediv.appendChild(empProfile);
+
+                const empInfoDiv = document.createElement("div");
+                empInfoDiv.classList.add("employee-info");
+                employeediv.appendChild(empInfoDiv);
+
+                const empName = document.createElement("h3");
+                empName.textContent = employee.nom;
+                empInfoDiv.appendChild(empName);
+
+                const empRole = document.createElement("p");
+                empRole.textContent = employee.role;
+                empInfoDiv.appendChild(empRole);
+
+                employeediv.addEventListener('click', () => {
+                    employee.department = btn.parentElement.querySelector(".department-title").textContent;
+                    departmentEmployeeList.removeChild(employeediv);
+                    console.log(employeeArray);
+                });
+            }
+
+        });
+    });
+});
+
 addBtn.addEventListener('click', () => {
     addContainer.className = "add-container";
-})
-modalOverlay.addEventListener('click', () => {
-    addContainer.className = "hidden";
-})
+});
 
 addExperianceBtn.addEventListener('click', () => {
     experienceCount++;
