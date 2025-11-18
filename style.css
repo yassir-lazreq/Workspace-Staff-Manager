@@ -93,6 +93,7 @@ body {
   justify-content: space-around;
   border-radius: 8px;
   width: 34vw;
+  margin-bottom: 2rem;
 }
 
 .input-experience {
@@ -103,6 +104,7 @@ body {
   border-radius: 8px;
   padding: 0.5rem;
   font-size: 1rem;
+  
 }
 
 .experience-header {
@@ -118,6 +120,7 @@ body {
   border-radius: 8px;
   border: 1px solid #a2a4a8;
   background-color: #e4e8ed6f;
+  cursor: pointer;
 }
 
 .input-field {
