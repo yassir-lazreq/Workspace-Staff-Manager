@@ -16,16 +16,16 @@
 
         <div class="modal-content">
             <h2 class="modal-title">Ajouter un nouvel employé</h2>
-            <form name="formulaire" class="form" id="formulaire">
+            <form class="form" id="formulaire">
 
                 <div>
                     <label for="nom" class="label">nom complet</label><br>
-                    <input type="text" id="nom" name="nom" placeholder="nom complet" class="input-field">
+                    <input type="text" id="nom" placeholder="nom complet" class="input-field">
                 </div>
 
                 <div>
                     <label for="role" class="label">Role</label><br>
-                    <select name="role" id="role" class="input-select">
+                    <select id="role" class="input-select">
                         <option value="manager">Manager</option>
                         <option value="receptionniste">Réceptionniste</option>
                         <option value="technicien IT">Technicien IT</option>
@@ -36,31 +36,31 @@
 
                 <div>
                     <label for="email" class="label">email</label><br>
-                    <input type="email" id="email" name="email" placeholder="email" class="input-field">
+                    <input type="email" id="email" placeholder="email" class="input-field">
                 </div>
 
                 <div>
                     <label for="telephone" class="label">téléphone</label><br>
-                    <input type="tel" id="telephone" name="telephone" placeholder="téléphone" class="input-field">
+                    <input type="tel" id="telephone" placeholder="téléphone" class="input-field">
                 </div>
 
                 <div>
                     <label for="img" class="label">photo</label><br>
-                    <input type="file" id="img" name="img" class="input-file">
+                    <input type="file" id="img" class="input-file">
                 </div>
 
                 <div>
                     <div class="experience-header">
                         <label for="Expériences professionnelles" class="label">Expériences professionnelles</label>
-                        <button type="button" class="add-experiance-btn">+ Ajouter une experience</button>
+                        <button type="button" class="add-experiance-btn" id="addExperianceBtn">+ Ajouter une experience</button>
                     </div>
                     <div class="experiences-div">
-                        <input type="text" placeholder="Entreprise" id="Experiences" name="experiences" class="input-experience">
-                        <input type="text" placeholder="post" id="post" name="post" class="input-experience">
-                        <input type="text" placeholder="periode(2020 - 2025)" id="periode" name="periode" class="input-experience">
+                        <input type="text" placeholder="Entreprise" id="Experience" class="input-experience">
+                        <input type="text" placeholder="post" id="post" class="input-experience">
+                        <input type="text" placeholder="periode(2020 - 2025)" id="periode" class="input-experience">
                     </div>
                 </div>
-                <button type="submit" class="Ajouter-employer" id="Ajouter-employer">Ajouter</button>
+                <button type="submit" class="Ajouter-employer" id="AjouterEmployer">Ajouter</button>
             </form>
         </div>
     </div>
