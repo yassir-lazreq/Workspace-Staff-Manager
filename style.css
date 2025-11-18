@@ -51,14 +51,14 @@ body {
 .form {
   display: flex;
   justify-content: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
-  padding: 40px;
-  gap: 30px;
+  padding: 0px;
+  row-gap: 30px;
 }
 
 .input-select {
-  width: 14.5vw;
+  width: 17.5vw;
   margin-top: 0.7rem;
   border: 1px solid #a2a4a8;
   background-color: #e4e8ed6f;
@@ -73,18 +73,56 @@ body {
 }
 
 .input-file {
-  width: 13vw;
-  height: 1rem;
+  width: 34vw;
+  height: 4rem;
   margin-top: 1rem;
-  border: 1px solid #d1d5db;
+  border: 1px dashed #a2a4a8;
+  background-color: #e4e8ed6f;
+  border-radius: 8px;
+  padding: 1rem;
+
+}
+
+.experiences-div {
+  border: 1px solid #a2a4a8;
+  background-color: #e4e8ed6f;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 8px;
+  width: 34vw;
+}
+
+.input-experience {
+  width: 9vw;
+  height: 1.2rem;
+  border: 1px solid #a2a4a8;
+  background-color: #e4e8ed6f;
   border-radius: 8px;
   padding: 0.5rem;
   font-size: 1rem;
 }
 
+.experience-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+
+.add-experiance-btn {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #a2a4a8;
+  background-color: #e4e8ed6f;
+}
+
 .input-field {
-  width: 13vw;
-  height: 1rem;
+  width: 16vw;
+  height: 1.2rem;
   margin-top: 0.7rem;
   border: 1px solid #a2a4a8;
   background-color: #e4e8ed6f;
@@ -175,7 +213,7 @@ body {
   grid-template-rows: 34% 31% 34%;
 }
 
-.department-title{
+.department-title {
   font-size: smaller;
 }
 
