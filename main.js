@@ -3,6 +3,7 @@ const addContainer = document.getElementById("addContainer");
 const modalOverlay = document.querySelector(".modal-overlay");
 const formulaire = document.getElementById("formulaire");
 const addExperianceBtn = document.getElementById("addExperianceBtn");
+const unassinedList = document.getElementById("unassined");
 
 let experienceCount = 1;
 let employeeArray = [];
@@ -89,6 +90,43 @@ formulaire.addEventListener('submit', (e) => {
     employeeArray.push(employee);
 
     addContainer.className = "hidden";
-    console.log(employeeArray);
     formulaire.reset();
+    console.log(employeeArray);
+    renderUnassinedEmployees(employee);
 });
+
+
+function renderUnassinedEmployees(employee) {
+    const employeediv = document.createElement("div");
+    employeediv.classList.add("employee-div");
+    unassinedList.appendChild(employeediv);
+
+    const empProfile = document.createElement("img");
+    empProfile.src = URL.createObjectURL(employee.img);
+    empProfile.alt = "Profile Picture";
+    empProfile.classList.add("employee-profile");
+    employeediv.appendChild(empProfile);
+
+    const empInfoDiv = document.createElement("div");
+    empInfoDiv.classList.add("employee-info");
+    employeediv.appendChild(empInfoDiv);
+
+    const empName = document.createElement("h3");
+    empName.textContent = employee.nom;
+    empInfoDiv.appendChild(empName);
+
+    const empRole = document.createElement("p");
+    empRole.textContent = employee.role;
+    empInfoDiv.appendChild(empRole);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "X";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.addEventListener('click', () => {
+        unassinedList.removeChild(employeediv);
+        employeeArray = employeeArray.filter(emp => emp !== employee);
+        console.log(employeeArray);
+    });
+    employeediv.appendChild(deleteBtn);
+}
+
