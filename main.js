@@ -7,6 +7,27 @@ const unassinedList = document.getElementById("unassined");
 const addEmployeeToDepartmentBtns = document.querySelectorAll(".icon-plus");
 const employeeListContainer = document.getElementById("employeeList");
 const departmentEmployeeList = document.getElementById("departmentEmployeeList");
+const imgInput = document.getElementById("img");
+const imgPreview = document.getElementById("preview");
+
+imgInput.addEventListener('change', () => {
+    const file = imgInput.files[0];
+    if (file) {
+        imgPreview.src = URL.createObjectURL(file);
+    }
+});
+
+function clearImagePreview() {
+    imgPreview.src = "";
+}
+imgInput.addEventListener('change', () => {
+    const file = imgInput.files[0];
+    if (file) {
+        imgPreview.src = URL.createObjectURL(file);
+    } else {
+        clearImagePreview();
+    }
+});
 
 let experienceCount = 1;
 let employeeArray = [];
@@ -15,6 +36,7 @@ modalOverlay.forEach(overlay => {
     overlay.addEventListener('click', () => {
         addContainer.className = "hidden";
         employeeListContainer.className = "hidden";
+        clearImagePreview();
     });
 });
 

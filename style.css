@@ -77,14 +77,24 @@ body {
 }
 
 .input-file {
-  width: 34vw;
-  height: 4rem;
+  width: 22vw;
+  height: 6rem;
   margin-top: 1rem;
   border: 1px dashed #a2a4a8;
   background-color: #e4e8ed6f;
   border-radius: 8px;
   padding: 1rem;
 
+}
+
+.image-preview {
+  width: 10rem;
+  height: 8rem;
+  margin-top: 1rem;
+  border: 1px dashed #a2a4a8;
+  background-color: #e4e8ed6f;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
 .experiences-div {
