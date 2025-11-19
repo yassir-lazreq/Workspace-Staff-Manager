@@ -17,6 +17,7 @@ const roleSelect = document.getElementById("role");
 const emailInput = document.getElementById("email");
 const telephoneInput = document.getElementById("telephone");
 const experiencesDiv = document.querySelector(".list-des-experience");
+const employeeListInDepartment = document.querySelectorAll(".employee-list-in-department");
 
 
 // Application State
@@ -24,6 +25,7 @@ const experiencesDiv = document.querySelector(".list-des-experience");
 let experienceCount = 1;
 let employeeArray = [];
 let conferencesArray = [];
+conferencesArray
 let receptionArray = [];
 let serverRoomArray = [];
 let securityRoomArray = [];
@@ -170,10 +172,24 @@ function addExperienceForm() {
     experiencesDiv.appendChild(newExperienceDiv);
 }
 
+function getDepartmentArray(departmentId) {
+    switch (departmentId) {
+        case "salleConference": return conferencesArray;
+        case "reception": return receptionArray;
+        case "salleServeur": return serverRoomArray;
+        case "salleSecurite": return securityRoomArray;
+        case "sallePersonnel": return staffRoomArray;
+        case "salleArchives": return archivesArray;
+        default: return null;
+    }
+}
+
+
 function showEmployeeListModal(btn) {
     if(btn.getAttribute("data-max") <= departmentEmployeeList.childElementCount) return;
     employeeListContainer.className = "add-container";
     departmentEmployeeList.innerHTML = "";
+    const departmentArray = getDepartmentArray(btn.getAttribute("data-departement"));
     employeeArray.forEach(employee => {
         if (employee.department === null && btn.getAttribute("data-accessibilite").includes(employee.role.toLowerCase())) {
             const employeediv = document.createElement("div");
@@ -199,12 +215,27 @@ function showEmployeeListModal(btn) {
             empInfoDiv.appendChild(empRole);
 
             employeediv.addEventListener('click', () => {
-                const department = btn.getAttribute("data-departement");
-                employee.department = department;
+                employee.department = btn.getAttribute("data-departement");
+                departmentArray.push(employee);
                 departmentEmployeeList.removeChild(employeediv);
-                renderUnassinedEmployees(employee);
-                renderDepartments(employee);
+                employeeListInDepartment.forEach(list => {
+                    if (list.parentElement.id === btn.getAttribute("data-departement")) {
+                        const empDivInDept = document.createElement("div");
+                        empDivInDept.classList.add("employee-div-in-department");
+                        const empImgInDept = document.createElement("img");
+                        empImgInDept.src = URL.createObjectURL(employee.img);
+                        empImgInDept.alt = "Profile Picture";
+                        empImgInDept.classList.add("employee-profile-in-department");
+                        empDivInDept.appendChild(empImgInDept);
+                        const empNameInDept = document.createElement("span");
+                        empNameInDept.textContent = employee.nom;
+                        empDivInDept.appendChild(empNameInDept);
+                        list.appendChild(empDivInDept);
+                    }
+                });
                 console.log(employeeArray);
+                departmentEmployeeList.className = "hidden";
+                employeeListContainer.className = "hidden";
             });
         }
     });
