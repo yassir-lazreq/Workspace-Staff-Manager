@@ -28,9 +28,9 @@
                     <select id="role" class="input-select">
                         <option value="manager">Manager</option>
                         <option value="receptionniste">Réceptionniste</option>
-                        <option value="technicien IT">Technicien IT</option>
-                        <option value="agent Securite">Agent Sécurité</option>
-                        <option value="Nettoyage">Nettoyage</option>
+                        <option value="technicien it">Technicien IT</option>
+                        <option value="agent securite">Agent Sécurité</option>
+                        <option value="nettoyage">Nettoyage</option>
                     </select>
                 </div>
 
@@ -111,43 +111,66 @@
             <div id="salleConference" class="department-card salleConference">
                 <div class="department-header">
                     <h4 class="department-title">Salle des conférences</h4>
-                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus">
+                    <p class="department-count">0/10</p>
+                    <img src="assets/plus-solid-full.svg" data-departement="salleConference" data-accessibilite="all" alt="plus icon" class="icon-plus">
                 </div>
-                <div class=""></div>
+                <div class="department-employee-list">
+                    <!-- Liste des employés assignés à la salle des conférences -->
+                </div>
             </div>
 
             <div id="reception" class="department-card reception">
                 <div class="department-header">
                     <h4 class="department-title">Réception</h4>
-                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus">
+                    <p class="department-count">0/5</p>
+                    <img src="assets/plus-solid-full.svg" data-departement="reception" data-accessibilite="receptionniste,manager,nettoyage" alt="plus icon" class="icon-plus">
+                </div>
+                <div class="department-employee-list">
+                    <!-- Liste des employés assignés à la réception -->
                 </div>
             </div>
 
             <div id="salleServeur" class="department-card salleServeur">
                 <div class="department-header">
                     <h4 class="department-title">Salle des serveurs</h4>
-                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus">
+                    <p class="department-count">0/4</p>
+                    <img src="assets/plus-solid-full.svg" data-departement="salleServeur" data-accessibilite="technicien it,manager,nettoyage" alt="plus icon" class="icon-plus">
+                </div>
+                <div class="department-employee-list">
+                    <!-- Liste des employés assignés à la salle des serveurs -->
                 </div>
             </div>
 
             <div id="salleSecurite" class="department-card salleSecurite">
                 <div class="department-header">
                     <h4 class="department-title">Salle des Securite</h4>
-                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus">
+                    <p class="department-count">0/3</p>
+                    <img src="assets/plus-solid-full.svg" data-departement="salleSecurite" data-accessibilite="agent securite,manager,nettoyage" alt="plus icon" class="icon-plus">
+                </div>
+                <div class="department-employee-list">
+                    <!-- Liste des employés assignés à la salle des securite -->
                 </div>
             </div>
 
             <div id="sallePersonnel" class="department-card sallePersonnel">
                 <div class="department-header">
                     <h4 class="department-title">Salle des personnel</h4>
-                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus">
+                    <p class="department-count">0/6</p>
+                    <img src="assets/plus-solid-full.svg" data-departement="sallePersonnel" data-accessibilite="all" alt="plus icon" class="icon-plus">
+                </div>
+                <div class="department-employee-list">
+                    <!-- Liste des employés assignés à la salle des personnel -->
                 </div>
             </div>
 
             <div id="salleArchives" class="department-card salleArchives">
                 <div class="department-header">
                     <h4 class="department-title">Salle des archives</h4>
-                    <img src="assets/plus-solid-full.svg" alt="plus icon" class="icon-plus">
+                    <p class="department-count">0/2</p>
+                    <img src="assets/plus-solid-full.svg" data-departement="salleArchives" data-accessibilite="archives,manager" alt="plus icon" class="icon-plus">
+                </div>
+                <div class="department-employee-list">
+                    <!-- Liste des employés assignés à la salle des archives -->
                 </div>
             </div>
         </div>
