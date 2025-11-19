@@ -23,7 +23,12 @@ const experiencesDiv = document.querySelector(".list-des-experience");
 
 let experienceCount = 1;
 let employeeArray = [];
-
+let conferencesArray = [];
+let receptionArray = [];
+let serverRoomArray = [];
+let securityRoomArray = [];
+let staffRoomArray = [];
+let archivesArray = [];
 
 // Validation Functions
 
@@ -165,15 +170,12 @@ function addExperienceForm() {
     experiencesDiv.appendChild(newExperienceDiv);
 }
 
-function showAddEmployeeModal() {
-    addContainer.className = "add-container";
-}
-
 function showEmployeeListModal(btn) {
+    if(btn.getAttribute("data-max") <= departmentEmployeeList.childElementCount) return;
     employeeListContainer.className = "add-container";
     departmentEmployeeList.innerHTML = "";
     employeeArray.forEach(employee => {
-        if (employee.department === null) {
+        if (employee.department === null && btn.getAttribute("data-accessibilite").includes(employee.role.toLowerCase())) {
             const employeediv = document.createElement("div");
             employeediv.classList.add("employee-div");
             departmentEmployeeList.appendChild(employeediv);
@@ -267,6 +269,10 @@ experiencesDiv.addEventListener("input", (e) => {
 
 
 // Event Handlers
+function showAddEmployeeModal() {
+    addContainer.className = "add-container";
+}
+
 
 function handleFormSubmit(e) {
     e.preventDefault();
