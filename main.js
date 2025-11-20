@@ -17,7 +17,6 @@ const roleSelect = document.getElementById("role");
 const emailInput = document.getElementById("email");
 const telephoneInput = document.getElementById("telephone");
 const experiencesDiv = document.querySelector(".list-des-experience");
-const employeeListInDepartment = document.querySelectorAll(".employee-list-in-department");
 
 
 // Application State
@@ -25,12 +24,12 @@ const employeeListInDepartment = document.querySelectorAll(".employee-list-in-de
 let experienceCount = 1;
 let employeeArray = [];
 let conferencesArray = [];
-conferencesArray
 let receptionArray = [];
 let serverRoomArray = [];
 let securityRoomArray = [];
 let staffRoomArray = [];
 let archivesArray = [];
+
 
 // Validation Functions
 
@@ -186,10 +185,10 @@ function getDepartmentArray(departmentId) {
 
 
 function showEmployeeListModal(btn) {
-    if(btn.getAttribute("data-max") <= departmentEmployeeList.childElementCount) return;
-    employeeListContainer.className = "add-container";
     departmentEmployeeList.innerHTML = "";
     const departmentArray = getDepartmentArray(btn.getAttribute("data-departement"));
+    if (btn.getAttribute("data-max") <= departmentArray.length) return;
+    employeeListContainer.className = "add-container";
     employeeArray.forEach(employee => {
         if (employee.department === null && btn.getAttribute("data-accessibilite").includes(employee.role.toLowerCase())) {
             const employeediv = document.createElement("div");
@@ -215,30 +214,39 @@ function showEmployeeListModal(btn) {
             empInfoDiv.appendChild(empRole);
 
             employeediv.addEventListener('click', () => {
-                employee.department = btn.getAttribute("data-departement");
-                departmentArray.push(employee);
+                const department = btn.getAttribute("data-departement");
+                employee.department = department;
                 departmentEmployeeList.removeChild(employeediv);
-                employeeListInDepartment.forEach(list => {
-                    if (list.parentElement.id === btn.getAttribute("data-departement")) {
-                        const empDivInDept = document.createElement("div");
-                        empDivInDept.classList.add("employee-div-in-department");
-                        const empImgInDept = document.createElement("img");
-                        empImgInDept.src = URL.createObjectURL(employee.img);
-                        empImgInDept.alt = "Profile Picture";
-                        empImgInDept.classList.add("employee-profile-in-department");
-                        empDivInDept.appendChild(empImgInDept);
-                        const empNameInDept = document.createElement("span");
-                        empNameInDept.textContent = employee.nom;
-                        empDivInDept.appendChild(empNameInDept);
-                        list.appendChild(empDivInDept);
-                    }
-                });
+                unassinedList.removeChild(employeediv);
+                departmentArray.push(employee);
+                renderDepartments(employee, department);
                 console.log(employeeArray);
-                departmentEmployeeList.className = "hidden";
-                employeeListContainer.className = "hidden";
             });
         }
     });
+}
+
+function renderDepartments(employee, department) {
+    const departmentContainer = document.getElementById(department);
+    const departmentList = departmentContainer.querySelector(".employee-list-in-department");    
+    const employeediv = document.createElement("div");
+    employeediv.classList.add("employee-div-in-department");
+    departmentList.appendChild(employeediv);
+
+    const empProfile = document.createElement("img");
+    empProfile.src = URL.createObjectURL(employee.img);
+    empProfile.alt = "Profile Picture";
+    empProfile.classList.add("employee-profile-in-department");
+    employeediv.appendChild(empProfile);
+    const empInfoDiv = document.createElement("div");
+    empInfoDiv.classList.add("employee-info");
+    employeediv.appendChild(empInfoDiv);
+    const empName = document.createElement("h3");
+    empName.textContent = employee.nom;
+    empInfoDiv.appendChild(empName);
+    const empRole = document.createElement("p");
+    empRole.textContent = employee.role;
+    empInfoDiv.appendChild(empRole);
 }
 
 function hideModals() {
@@ -350,11 +358,18 @@ function handleFormSubmit(e) {
     };
 
     employeeArray.push(employee);
-    renderUnassinedEmployees(employee);
+    renderUnassinedEmployeesArray(employeeArray);
 
     formulaire.reset();
     hideModals();
     console.log(employeeArray);
+}
+
+function renderUnassinedEmployeesArray(employeeArray) {
+    unassinedList.innerHTML = "";
+    employeeArray.forEach(employee => {
+        renderUnassinedEmployees(employee);
+    });
 }
 
 // Event Listeners

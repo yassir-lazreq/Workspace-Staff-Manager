@@ -1,31 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workspace</title>
+    <title>Workspace - Employee Management</title>
     <link href="style.css" rel="stylesheet">
 </head>
 
 <body>
 
+    <!-- Add Employee Modal -->
     <div id="addContainer" class="hidden add-container">
-
         <div class="modal-overlay"></div>
 
         <div class="modal-content">
             <h2 class="modal-title">Ajouter un nouvel employé</h2>
-            <form class="form" id="formulaire">
 
+            <form class="form" id="formulaire">
                 <div>
-                    <label for="nom" class="label">nom complet</label><br>
-                    <input type="text" id="nom" placeholder="nom complet" class="input-field">
+                    <label for="nom" class="label">Nom complet</label><br>
+                    <input type="text" id="nom" placeholder="Nom complet" class="input-field">
                 </div>
 
                 <div>
-                    <label for="role" class="label">Role</label><br>
+                    <label for="role" class="label">Rôle</label><br>
                     <select id="role" class="input-select">
+                        <option value="">Sélectionner un rôle</option>
                         <option value="manager">Manager</option>
                         <option value="receptionniste">Réceptionniste</option>
                         <option value="technicien it">Technicien IT</option>
@@ -35,146 +36,159 @@
                 </div>
 
                 <div>
-                    <label for="email" class="label">email</label><br>
-                    <input type="email" id="email" placeholder="email" class="input-field">
+                    <label for="email" class="label">Email</label><br>
+                    <input type="email" id="email" placeholder="Email" class="input-field">
                 </div>
 
                 <div>
-                    <label for="telephone" class="label">téléphone</label><br>
-                    <input type="tel" id="telephone" placeholder="téléphone" class="input-field">
+                    <label for="telephone" class="label">Téléphone</label><br>
+                    <input type="tel" id="telephone" placeholder="Téléphone" class="input-field">
                 </div>
 
                 <div>
-                    <label for="img" class="label">photo</label><br>
-                    <input type="file" id="img" class="input-file">
+                    <label for="img" class="label">Photo</label><br>
+                    <input type="file" id="img" accept="image/*" class="input-file">
                 </div>
+
                 <div>
-                    <label for="preview" class="label">preview</label><br>
+                    <label for="preview" class="label">Aperçu</label><br>
                     <output>
-                        <img id="preview" class="image-preview">
+                        <img id="preview" class="image-preview" alt="">
                     </output>
                 </div>
 
                 <div class="list-des-experience">
                     <div class="experience-header">
-                        <label for="Expériences professionnelles" class="label">Expériences professionnelles</label>
-                        <button type="button" class="add-experiance-btn" id="addExperianceBtn">+ Ajouter une
-                            experience</button>
+                        <label class="label">Expériences professionnelles</label>
+                        <button type="button" class="add-experience-btn" id="addExperianceBtn">
+                            + Ajouter une expérience
+                        </button>
                     </div>
+
                     <div class="experiences-div">
                         <input type="text" placeholder="Entreprise" class="input-experience entreprise">
                         <input type="text" placeholder="Poste" class="input-experience poste">
                         <input type="text" placeholder="Période (2020 - 2025)" class="input-experience duree">
                     </div>
-
                 </div>
+
                 <button type="submit" class="Ajouter-employer" id="AjouterEmployer">Ajouter</button>
             </form>
         </div>
     </div>
 
+    <!-- Employee Selection Modal -->
     <div class="hidden add-container" id="employeeList">
         <div class="modal-overlay"></div>
+
         <div class="modal-content employee-list-modal">
-            <h2 class="modal-title">choisir un employé</h2>
+            <h2 class="modal-title">Choisir un employé</h2>
             <div id="departmentEmployeeList" class="department-employee-list">
-                
             </div>
         </div>
     </div>
 
+    <!-- Header -->
     <header class="header-main">
         <h1 class="header-title">Workspace</h1>
     </header>
 
+    <!-- Main Content -->
     <main class="main-layout">
-
+        <!-- Sidebar - Unassigned Employees -->
         <section class="sidebar">
-
             <div class="sidebar-header">
-                <img src="assets/users.png" alt="employee icon" class="icon-employee">
+                <img src="assets/users.png" alt="Employee icon" class="icon-employee">
                 <h2 class="section-title">Employés non assignés</h2>
             </div>
 
             <button id="ajouter" class="primary-button">
-                ajouter un employé +
+                Ajouter un employé +
             </button>
 
             <div id="unassined" class="unassigned-list">
-                <!-- Liste des employés non assignés -->
             </div>
-
         </section>
 
+        <!-- Departments Layout -->
         <div id="departments" class="departments-container">
-
+            <!-- Conference Room -->
             <div id="salleConference" class="department-card salleConference">
                 <div class="department-header">
                     <h4 class="department-title">Salle des conférences</h4>
                     <p class="department-count">0/10</p>
-                    <img src="assets/plus-solid-full.svg" data-departement="salleConference" data-accessibilite="manager,receptionniste,technicien it,nettoyage,personnel,securite" data-max="10" alt="plus icon" class="icon-plus">
+                    <img src="assets/plus-solid-full.svg" data-departement="salleConference"
+                        data-accessibilite="manager,receptionniste,technicien it,nettoyage,personnel,securite"
+                        data-max="10" alt="Add employee" class="icon-plus">
                 </div>
                 <div class="employee-list-in-department">
-                    <!-- Liste des employés assignés à la salle des conférences -->
                 </div>
             </div>
 
+            <!-- Reception -->
             <div id="reception" class="department-card reception">
                 <div class="department-header">
                     <h4 class="department-title">Réception</h4>
                     <p class="department-count">0/5</p>
-                    <img src="assets/plus-solid-full.svg" data-departement="reception" data-accessibilite="receptionniste,manager,nettoyage" data-max="5" alt="plus icon" class="icon-plus">
+                    <img src="assets/plus-solid-full.svg" data-departement="reception"
+                        data-accessibilite="receptionniste,manager,nettoyage" data-max="5" alt="Add employee"
+                        class="icon-plus">
                 </div>
                 <div class="employee-list-in-department">
-                    <!-- Liste des employés assignés à la réception -->
                 </div>
             </div>
 
+            <!-- Server Room -->
             <div id="salleServeur" class="department-card salleServeur">
                 <div class="department-header">
                     <h4 class="department-title">Salle des serveurs</h4>
                     <p class="department-count">0/4</p>
-                    <img src="assets/plus-solid-full.svg" data-departement="salleServeur" data-accessibilite="technicien it,manager,nettoyage" data-max="4" alt="plus icon" class="icon-plus">
+                    <img src="assets/plus-solid-full.svg" data-departement="salleServeur"
+                        data-accessibilite="technicien it,manager,nettoyage" data-max="4" alt="Add employee"
+                        class="icon-plus">
                 </div>
                 <div class="employee-list-in-department">
-                    <!-- Liste des employés assignés à la salle des serveurs -->
                 </div>
             </div>
 
+            <!-- Security Room -->
             <div id="salleSecurite" class="department-card salleSecurite">
                 <div class="department-header">
-                    <h4 class="department-title">Salle des Securite</h4>
+                    <h4 class="department-title">Salle de sécurité</h4>
                     <p class="department-count">0/3</p>
-                    <img src="assets/plus-solid-full.svg" data-departement="salleSecurite" data-accessibilite="agent securite,manager,nettoyage" data-max="3" alt="plus icon" class="icon-plus">
+                    <img src="assets/plus-solid-full.svg" data-departement="salleSecurite"
+                        data-accessibilite="agent securite,manager,nettoyage" data-max="3" alt="Add employee"
+                        class="icon-plus">
                 </div>
                 <div class="employee-list-in-department">
-                    <!-- Liste des employés assignés à la salle des securite -->
                 </div>
             </div>
 
+            <!-- Staff Room -->
             <div id="sallePersonnel" class="department-card sallePersonnel">
                 <div class="department-header">
-                    <h4 class="department-title">Salle des personnel</h4>
+                    <h4 class="department-title">Salle du personnel</h4>
                     <p class="department-count">0/6</p>
-                    <img src="assets/plus-solid-full.svg" data-departement="sallePersonnel" data-accessibilite="manager,receptionniste,technicien it,nettoyage,personnel,securite" data-max="6" alt="plus icon" class="icon-plus">
+                    <img src="assets/plus-solid-full.svg" data-departement="sallePersonnel"
+                        data-accessibilite="manager,receptionniste,technicien it,nettoyage,personnel,securite"
+                        data-max="6" alt="Add employee" class="icon-plus">
                 </div>
                 <div class="employee-list-in-department">
-                    <!-- Liste des employés assignés à la salle des personnel -->
                 </div>
             </div>
 
+            <!-- Archives Room -->
             <div id="salleArchives" class="department-card salleArchives">
                 <div class="department-header">
                     <h4 class="department-title">Salle des archives</h4>
                     <p class="department-count">0/2</p>
-                    <img src="assets/plus-solid-full.svg" data-departement="salleArchives" data-accessibilite="manager" data-max="2" alt="plus icon" class="icon-plus">
+                    <img src="assets/plus-solid-full.svg" data-departement="salleArchives" data-accessibilite="manager"
+                        data-max="2" alt="Add employee" class="icon-plus">
                 </div>
                 <div class="employee-list-in-department">
-                    <!-- Liste des employés assignés à la salle des archives -->
                 </div>
             </div>
         </div>
-
     </main>
 
     <script src="main.js"></script>
