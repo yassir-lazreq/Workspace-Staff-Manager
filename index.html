@@ -21,6 +21,7 @@
                 <div>
                     <label for="nom" class="label">Nom complet</label><br>
                     <input type="text" id="nom" placeholder="Nom complet" class="input-field">
+                    <span class="error-message" id="nom-error"></span>
                 </div>
 
                 <div>
@@ -33,21 +34,25 @@
                         <option value="agent securite">Agent Sécurité</option>
                         <option value="nettoyage">Nettoyage</option>
                     </select>
+                    <span class="error-message" id="role-error"></span>
                 </div>
 
                 <div>
                     <label for="email" class="label">Email</label><br>
                     <input type="email" id="email" placeholder="Email" class="input-field">
+                    <span class="error-message" id="email-error"></span>
                 </div>
 
                 <div>
                     <label for="telephone" class="label">Téléphone</label><br>
                     <input type="tel" id="telephone" placeholder="Téléphone" class="input-field">
+                    <span class="error-message" id="telephone-error"></span>
                 </div>
 
                 <div>
                     <label for="img" class="label">Photo</label><br>
                     <input type="file" id="img" accept="image/*" class="input-file">
+                    <span class="error-message" id="img-error"></span>
                 </div>
 
                 <div>
@@ -68,7 +73,9 @@
                     <div class="experiences-div">
                         <input type="text" placeholder="Entreprise" class="input-experience entreprise">
                         <input type="text" placeholder="Poste" class="input-experience poste">
-                        <input type="text" placeholder="Période (2020 - 2025)" class="input-experience duree">
+                        <input type="date" class="input-experience start-date" placeholder="Date de début">
+
+                        <input type="date" class="input-experience end-date" placeholder="Date de fin">
                     </div>
                 </div>
 

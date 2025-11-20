@@ -18,6 +18,13 @@ const emailInput = document.getElementById("email");
 const telephoneInput = document.getElementById("telephone");
 const experiencesDiv = document.querySelector(".list-des-experience");
 
+// Error message elements
+const nomError = document.getElementById("nom-error");
+const roleError = document.getElementById("role-error");
+const emailError = document.getElementById("email-error");
+const telephoneError = document.getElementById("telephone-error");
+const imgError = document.getElementById("img-error");
+
 
 // Application State
 
@@ -35,66 +42,87 @@ let archivesArray = [];
 
 function validateNom() {
     const value = nomInput.value.trim();
-    if (value === "" || !/^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]{2,}$/.test(value)) {
-        setFieldError(nomInput);
+    if (value === "") {
+        setFieldError(nomInput, nomError, "Le nom est requis");
+        return false;
+    } else if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]{2,}$/.test(value)) {
+        setFieldError(nomInput, nomError, "Le nom doit contenir au moins 2 lettres");
         return false;
     } else {
-        clearFieldError(nomInput);
+        clearFieldError(nomInput, nomError);
         return true;
     }
 }
 
 function validateEmail() {
     const value = emailInput.value.trim();
-    if (value === "" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        setFieldError(emailInput);
+    if (value === "") {
+        setFieldError(emailInput, emailError, "L'email est requis");
+        return false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        setFieldError(emailInput, emailError, "Format d'email invalide");
         return false;
     } else {
-        clearFieldError(emailInput);
+        clearFieldError(emailInput, emailError);
         return true;
     }
 }
 
 function validateTelephone() {
     const value = telephoneInput.value.trim();
-    if (value === "" || !/^\+?\d{8,15}$/.test(value)) {
-        setFieldError(telephoneInput);
+    if (value === "") {
+        setFieldError(telephoneInput, telephoneError, "Le téléphone est requis");
+        return false;
+    } else if (!/^\+?\d{8,15}$/.test(value)) {
+        setFieldError(telephoneInput, telephoneError, "Format de téléphone invalide (8-15 chiffres)");
         return false;
     } else {
-        clearFieldError(telephoneInput);
+        clearFieldError(telephoneInput, telephoneError);
         return true;
     }
 }
 
 function validateRole() {
     if (!roleSelect.value) {
-        setFieldError(roleSelect);
+        setFieldError(roleSelect, roleError, "Veuillez sélectionner un rôle");
         return false;
     } else {
-        clearFieldError(roleSelect);
+        clearFieldError(roleSelect, roleError);
         return true;
     }
 }
 
 function validateImg() {
     const file = imgInput.files[0];
-    if (!file || !file.type.startsWith("image/")) {
-        setFieldError(imgInput);
+    if (!file) {
+        setFieldError(imgInput, imgError, "Une photo est requise");
+        return false;
+    } else if (!file.type.startsWith("image/")) {
+        setFieldError(imgInput, imgError, "Le fichier doit être une image");
         return false;
     } else {
-        clearFieldError(imgInput);
+        clearFieldError(imgInput, imgError);
         return true;
     }
 }
 
 // UI / Rendering Functions
 
-function setFieldError(input) {
+function setFieldError(input, errorElement, message) {
     input.classList.add("input-error");
+    if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = "block";
+    }
+    input.focus();
 }
 
-function clearFieldError(input) {
+function clearFieldError(input, errorElement) {
     input.classList.remove("input-error");
+    if (errorElement) {
+        errorElement.textContent = "";
+        errorElement.style.display = "none";
+    }
 }
 
 function clearImagePreview() {
@@ -225,22 +253,24 @@ function showEmployeeListModal(btn) {
                 const departementContainer = document.getElementById(department);
                 const departmentList = departementContainer.querySelector(".employee-list-in-department");
                 departmentList.innerHTML = "";
+                const employeeConter = departementContainer.querySelector(".department-count");
+                employeeConter.textContent = departmentArray.length + "/" + btn.getAttribute("data-max");
                 departmentArray.push(employee);
                 renderUnassinedEmployeesArray(employeeArray, department);
-                renderDepartmentsArray(departmentArray, department, departmentList);
+                renderDepartmentsArray(departmentArray, departmentList);
             });
         }
     });
 }
 
-function renderDepartmentsArray(departmentArray, department, departmentList) {
+function renderDepartmentsArray(departmentArray, departmentList) {
 
     departmentArray.forEach(employee => {
-        renderDepartments(employee, department, departmentList);
+        renderDepartments(employee, departmentList);
     });
 }
 
-function renderDepartments(employee, department, departmentList) {
+function renderDepartments(employee, departmentList) {
     const employeediv = document.createElement("div");
     employeediv.classList.add("employee-div-in-department");
     departmentList.appendChild(employeediv);
@@ -273,16 +303,19 @@ function hideModals() {
 function validateExperienceRow(row) {
     const entrepriseInput = row.querySelector(".entreprise");
     const posteInput = row.querySelector(".poste");
-    const dureeInput = row.querySelector(".duree");
+    const startInput = row.querySelector(".start-date");
+    const endInput = row.querySelector(".end-date");
 
     const entreprise = entrepriseInput.value.trim();
     const poste = posteInput.value.trim();
-    const duree = dureeInput.value.trim();
+    const start = startInput.value.trim();
+    const end = endInput.value.trim();
 
-    if (!entreprise && !poste && !duree) {
+    if (!entreprise && !poste && !start && !end) {
         clearFieldError(entrepriseInput);
         clearFieldError(posteInput);
-        clearFieldError(dureeInput);
+        clearFieldError(startInput);
+        clearFieldError(endInput);
         return true;
     }
 
@@ -302,12 +335,18 @@ function validateExperienceRow(row) {
         clearFieldError(posteInput);
     }
 
-    const periodeRegex = /^\d{4}\s*-\s*\d{4}$/;
-    if (!periodeRegex.test(duree)) {
-        setFieldError(dureeInput);
+    if (!start || !end) {
+        setFieldError(row.querySelector(".start-date"));
+        setFieldError(row.querySelector(".end-date"));
+        valid = false;
+    }
+    else if (new Date(start) > new Date(end)) {
+        setFieldError(row.querySelector(".start-date"));
+        setFieldError(row.querySelector(".end-date"));
         valid = false;
     } else {
-        clearFieldError(dureeInput);
+        clearFieldError(row.querySelector(".start-date"));
+        clearFieldError(row.querySelector(".end-date"));
     }
 
     return valid;
@@ -326,7 +365,6 @@ experiencesDiv.addEventListener("input", (e) => {
 function showAddEmployeeModal() {
     addContainer.className = "add-container";
 }
-
 
 function handleFormSubmit(e) {
     e.preventDefault();
@@ -351,13 +389,15 @@ function handleFormSubmit(e) {
     experienceRows.forEach(row => {
         const entrepriseInput = row.querySelector(".entreprise");
         const posteInput = row.querySelector(".poste");
-        const dureeInput = row.querySelector(".duree");
+        const startInput = row.querySelector(".start-date");
+        const endInput = row.querySelector(".end-date");
 
-        if (entrepriseInput.value.trim() !== "" && posteInput.value.trim() !== "" && dureeInput.value.trim() !== "") {
+        if (entrepriseInput.value.trim() !== "" && posteInput.value.trim() !== "" && startInput.value.trim() !== "" && endInput.value.trim() !== "") {
             experiencesArray.push({
                 entreprise: entrepriseInput.value,
                 poste: posteInput.value,
-                duree: dureeInput.value
+                startDate: startInput.value,
+                endDate: endInput.value
             });
         }
     });
