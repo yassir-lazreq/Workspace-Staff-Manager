@@ -217,18 +217,30 @@ function showEmployeeListModal(btn) {
                 const department = btn.getAttribute("data-departement");
                 employee.department = department;
                 departmentEmployeeList.removeChild(employeediv);
-                unassinedList.removeChild(employeediv);
+                const index = employeeArray.indexOf(employee);
+                if (index !== -1) {
+                    employeeArray.splice(index, 1);
+                }
+
+                const departementContainer = document.getElementById(department);
+                const departmentList = departementContainer.querySelector(".employee-list-in-department");
+                departmentList.innerHTML = "";
                 departmentArray.push(employee);
-                renderDepartments(employee, department);
-                console.log(employeeArray);
+                renderUnassinedEmployeesArray(employeeArray, department);
+                renderDepartmentsArray(departmentArray, department, departmentList);
             });
         }
     });
 }
 
-function renderDepartments(employee, department) {
-    const departmentContainer = document.getElementById(department);
-    const departmentList = departmentContainer.querySelector(".employee-list-in-department");    
+function renderDepartmentsArray(departmentArray, department, departmentList) {
+
+    departmentArray.forEach(employee => {
+        renderDepartments(employee, department, departmentList);
+    });
+}
+
+function renderDepartments(employee, department, departmentList) {
     const employeediv = document.createElement("div");
     employeediv.classList.add("employee-div-in-department");
     departmentList.appendChild(employeediv);
@@ -238,12 +250,15 @@ function renderDepartments(employee, department) {
     empProfile.alt = "Profile Picture";
     empProfile.classList.add("employee-profile-in-department");
     employeediv.appendChild(empProfile);
+
     const empInfoDiv = document.createElement("div");
-    empInfoDiv.classList.add("employee-info");
+    empInfoDiv.classList.add("employee-info-in-department");
     employeediv.appendChild(empInfoDiv);
+
     const empName = document.createElement("h3");
     empName.textContent = employee.nom;
     empInfoDiv.appendChild(empName);
+
     const empRole = document.createElement("p");
     empRole.textContent = employee.role;
     empInfoDiv.appendChild(empRole);

@@ -271,6 +271,12 @@ body {
   object-fit: cover;
 }
 
+.employee-info-in-department {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
 /* Department Styles */
 .departments-container {
   background-image: url('assets/background-departments.jpg');
