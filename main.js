@@ -5,8 +5,8 @@ const addBtn = document.getElementById("ajouter");
 const addContainer = document.getElementById("addContainer");
 const modalOverlay = document.querySelectorAll(".modal-overlay");
 const formulaire = document.getElementById("formulaire");
-const addExperianceBtn = document.getElementById("addExperianceBtn");
-const unassinedList = document.getElementById("unassined");
+const addExperienceBtn = document.getElementById("addExperienceBtn");
+const unassignedList = document.getElementById("unassigned");
 const addEmployeeToDepartmentBtns = document.querySelectorAll(".icon-plus");
 const employeeListContainer = document.getElementById("employeeList");
 const departmentEmployeeList = document.getElementById("departmentEmployeeList");
@@ -138,13 +138,14 @@ function updateImagePreview() {
     }
 }
 
-function renderUnassinedEmployees(employee) {
+function renderUnassignedEmployees(employee) {
     const employeediv = document.createElement("div");
     employeediv.classList.add("employee-div");
-    unassinedList.appendChild(employeediv);
+    unassignedList.appendChild(employeediv);
 
     const empProfile = document.createElement("img");
-    empProfile.src = URL.createObjectURL(employee.img);
+    const profileUrl = URL.createObjectURL(employee.img);
+    empProfile.src = profileUrl;
     empProfile.alt = "Profile Picture";
     empProfile.classList.add("employee-profile");
     employeediv.appendChild(empProfile);
@@ -164,8 +165,9 @@ function renderUnassinedEmployees(employee) {
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "X";
     deleteBtn.classList.add("delete-btn");
+    deleteBtn.setAttribute('aria-label', `Supprimer ${employee.nom}`);
     deleteBtn.addEventListener('click', () => {
-        unassinedList.removeChild(employeediv);
+
         const index = employeeArray.indexOf(employee);
         if (index !== -1) {
             employeeArray.splice(index, 1);
@@ -215,16 +217,20 @@ function getDepartmentArray(departmentId) {
 function showEmployeeListModal(btn) {
     departmentEmployeeList.innerHTML = "";
     const departmentArray = getDepartmentArray(btn.getAttribute("data-departement"));
-    if (btn.getAttribute("data-max") <= departmentArray.length) return;
+    if (!departmentArray) return;
+    const max = parseInt(btn.getAttribute("data-max") || "0", 10);
+    if (departmentArray.length >= max) return;
     employeeListContainer.className = "add-container";
     employeeArray.forEach(employee => {
-        if (employee.department === null && btn.getAttribute("data-accessibilite").includes(employee.role.toLowerCase())) {
+        const access = (btn.getAttribute("data-accessibilite") || "").toLowerCase();
+        if (employee.department === null && access.includes(employee.role.toLowerCase())) {
             const employeediv = document.createElement("div");
             employeediv.classList.add("employee-div");
             departmentEmployeeList.appendChild(employeediv);
 
             const empProfile = document.createElement("img");
-            empProfile.src = URL.createObjectURL(employee.img);
+            const profileUrl = URL.createObjectURL(employee.img);
+            empProfile.src = profileUrl;
             empProfile.alt = "Profile Picture";
             empProfile.classList.add("employee-profile");
             employeediv.appendChild(empProfile);
@@ -253,10 +259,12 @@ function showEmployeeListModal(btn) {
                 const departementContainer = document.getElementById(department);
                 const departmentList = departementContainer.querySelector(".employee-list-in-department");
                 departmentList.innerHTML = "";
-                const employeeConter = departementContainer.querySelector(".department-count");
-                employeeConter.textContent = departmentArray.length + "/" + btn.getAttribute("data-max");
+                const employeeCounter = departementContainer.querySelector(".department-count");
+                const counter = departmentArray.length + 1 ;
+                employeeCounter.textContent = counter + " / " + max;
+                console.log(employeeCounter.textContent);
                 departmentArray.push(employee);
-                renderUnassinedEmployeesArray(employeeArray, department);
+                renderUnassignedEmployeesArray(employeeArray);
                 renderDepartmentsArray(departmentArray, departmentList);
             });
         }
@@ -413,24 +421,24 @@ function handleFormSubmit(e) {
     };
 
     employeeArray.push(employee);
-    renderUnassinedEmployeesArray(employeeArray);
+    renderUnassignedEmployeesArray(employeeArray);
 
     formulaire.reset();
     hideModals();
     console.log(employeeArray);
 }
 
-function renderUnassinedEmployeesArray(employeeArray) {
-    unassinedList.innerHTML = "";
+function renderUnassignedEmployeesArray(employeeArray) {
+    unassignedList.innerHTML = "";
     employeeArray.forEach(employee => {
-        renderUnassinedEmployees(employee);
+        renderUnassignedEmployees(employee);
     });
 }
 
 // Event Listeners
 
 addBtn.addEventListener('click', showAddEmployeeModal);
-addExperianceBtn.addEventListener('click', addExperienceForm);
+addExperienceBtn.addEventListener('click', addExperienceForm);
 formulaire.addEventListener('submit', handleFormSubmit);
 
 modalOverlay.forEach(overlay => {
