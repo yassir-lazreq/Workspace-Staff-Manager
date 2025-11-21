@@ -116,7 +116,6 @@ function setFieldError(input, errorElement, message) {
         errorElement.textContent = message;
         errorElement.style.display = "block";
     }
-    input.focus();
 }
 
 function clearFieldError(input, errorElement) {
@@ -444,9 +443,7 @@ function validateExperienceRow(row) {
 
 function handleExperienceInput(e) {
     const row = e.target.closest(".experiences-div");
-    if (row) {
-        validateExperienceRow(row);
-    }
+    validateExperienceRow(row);
 }
 
 // Event Handler Functions
