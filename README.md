@@ -25,3 +25,7 @@ Clone the repository:
 2. To view an employee's details, click on their name in the employee list.
 3. To delete an employee, click the "X" button next to their name in the employee list.
 4. To manage departments, use the "Add Department" button and assign employees to them.
+
+## online demo
+
+You can access a live demo of the application [here](https://yassir-lazreq.github.io/Workspace-Staff-Manager/).
