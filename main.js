@@ -165,7 +165,10 @@ function renderUnassignedEmployees(employee) {
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "X";
     deleteBtn.classList.add("delete-btn");
-    deleteBtn.addEventListener('click', () => handleDeleteEmployee(employee, employeediv));
+    deleteBtn.addEventListener('click', () => {
+        handleDeleteEmployee(employee, employeediv);
+        hideModals();
+    });
     employeediv.appendChild(deleteBtn);
     employeediv.addEventListener('click', () => {
         employeeInfoModal.className = "add-container";
@@ -323,11 +326,11 @@ function showEmployeeListModal(btn) {
 function renderDepartmentsArray(departmentArray, departmentList) {
 
     departmentArray.forEach(employee => {
-        renderDepartments(employee, departmentList);
+        renderDepartments(employee, departmentList, departmentArray);
     });
 }
 
-function renderDepartments(employee, departmentList) {
+function renderDepartments(employee, departmentList, departmentArray) {
     const employeediv = document.createElement("div");
     employeediv.classList.add("employee-div-in-department");
     departmentList.appendChild(employeediv);
@@ -350,10 +353,35 @@ function renderDepartments(employee, departmentList) {
     empRole.textContent = employee.role;
     empInfoDiv.appendChild(empRole);
 
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "X";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.addEventListener('click', () => {
+        hideModals();
+        deleteEmployeeFromDepartment(employee, employeediv, departmentArray);
+    });
+    employeediv.appendChild(deleteBtn);
+
     employeediv.addEventListener('click', () => {
         employeeInfoModal.className = "add-container";
         renderEmployeeInfo(employee, employeeInfoDetailsDiv);
     });
+}
+
+function deleteEmployeeFromDepartment(employee, employeediv, departmentArray) {
+    const department = employee.department;
+    employee.department = null;
+    const departmentContainer = document.getElementById(department);
+    const departmentList = departmentContainer.querySelector(".employee-list-in-department");
+    departmentList.removeChild(employeediv);
+    const index = departmentArray.indexOf(employee);
+    departmentArray.splice(index, 1);
+    const employeeCounter = departmentContainer.querySelector(".department-count");
+    const counter = departmentArray.length;
+    employeeCounter.textContent = counter + " / " + employeeCounter.textContent.split(" / ")[1];
+    console.log(employeeCounter.textContent);
+    employeeArray.push(employee);
+    renderUnassignedEmployeesArray(employeeArray);
 }
 
 function hideModals() {
@@ -480,19 +508,19 @@ function handleFormSubmit(e) {
 
         if (entrepriseInput.value.trim() !== "" && posteInput.value.trim() !== "" && startInput.value.trim() !== "" && endInput.value.trim() !== "") {
             experiencesArray.push({
-                entreprise: entrepriseInput.value,
-                poste: posteInput.value,
-                startDate: startInput.value,
-                endDate: endInput.value
+                entreprise: entrepriseInput.value.trim(),
+                poste: posteInput.value.trim(),
+                startDate: startInput.value.trim(),
+                endDate: endInput.value.trim()
             });
         }
     });
 
     const employee = {
-        nom: nomInput.value,
+        nom: nomInput.value.trim(),
         role: roleSelect.value,
-        email: emailInput.value,
-        telephone: telephoneInput.value,
+        email: emailInput.value.trim(),
+        telephone: telephoneInput.value.trim(),
         img: imgInput.value.trim(),
         experiences: experiencesArray,
         department: null
