@@ -308,18 +308,26 @@ body {
 }
 
 .employee-list-in-department {
-  padding-top: 2rem;
+  padding-top: 1rem;
+  margin-bottom: 0.8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   row-gap: 0.3rem;
-  max-height: 50vh;
+  flex: 1;
   overflow-y: auto;
+  min-height: 0;
+  width: 100%;
+}
+
+.employee-list-in-department::-webkit-scrollbar {
+  width: 8px;
 }
 
 .employee-div-in-department {
   width: 80%;
+  height: fit-content;
   background-color: #d1d5db;
   border-radius: 0.5rem;
   padding: 0.5rem;
@@ -402,6 +410,10 @@ body {
 
 .department-card {
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
 .department-header {
@@ -411,6 +423,7 @@ body {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .department-title {
