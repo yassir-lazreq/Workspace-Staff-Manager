@@ -1,15 +1,16 @@
-
-// DOM Element Selections
-
+// === Boutons / Actions ===
 const addBtn = document.getElementById("ajouter");
+const addExperienceBtn = document.getElementById("addExperienceBtn");
+const addEmployeeToDepartmentBtns = document.querySelectorAll(".icon-plus");
+
+// === Modals & overlays ===
 const addContainer = document.getElementById("addContainer");
 const modalOverlay = document.querySelectorAll(".modal-overlay");
+const employeeInfoModal = document.getElementById("employeeInfoModal");
+const employeeInfoDetailsDiv = document.getElementById("employeeInfoDetails");
+
+// === Formulaire employé ===
 const formulaire = document.getElementById("formulaire");
-const addExperienceBtn = document.getElementById("addExperienceBtn");
-const unassignedList = document.getElementById("unassigned");
-const addEmployeeToDepartmentBtns = document.querySelectorAll(".icon-plus");
-const employeeListContainer = document.getElementById("employeeList");
-const departmentEmployeeList = document.getElementById("departmentEmployeeList");
 const imgInput = document.getElementById("img");
 const imgPreview = document.getElementById("preview");
 const nomInput = document.getElementById("nom");
@@ -17,8 +18,11 @@ const roleSelect = document.getElementById("role");
 const emailInput = document.getElementById("email");
 const telephoneInput = document.getElementById("telephone");
 const experiencesDiv = document.querySelector(".list-des-experience");
-const employeeInfoModal = document.getElementById("employeeInfoModal");
-const employeeInfoDetailsDiv = document.getElementById("employeeInfoDetails");
+
+// === Listes / Containers employés ===
+const unassignedList = document.getElementById("unassigned");
+const employeeListContainer = document.getElementById("employeeList");
+const departmentEmployeeList = document.getElementById("departmentEmployeeList");
 
 // Error Message Elements
 
@@ -94,12 +98,9 @@ function validateRole() {
 }
 
 function validateImg() {
-    const file = imgInput.files[0];
-    if (!file) {
-        setFieldError(imgInput, imgError, "Une photo est requise");
-        return false;
-    } else if (!file.type.startsWith("image/")) {
-        setFieldError(imgInput, imgError, "Le fichier doit être une image");
+    const value = imgInput.value.trim();
+    if (value === "") {
+        setFieldError(imgInput, imgError, "L'URL de la photo est requise");
         return false;
     } else {
         clearFieldError(imgInput, imgError);
@@ -131,9 +132,9 @@ function clearImagePreview() {
 }
 
 function updateImagePreview() {
-    const file = imgInput.files[0];
-    if (file) {
-        imgPreview.src = URL.createObjectURL(file);
+    const value = imgInput.value.trim();
+    if (value) {
+        imgPreview.src = value;
     } else {
         clearImagePreview();
     }
@@ -145,8 +146,7 @@ function renderUnassignedEmployees(employee) {
     unassignedList.appendChild(employeediv);
 
     const empProfile = document.createElement("img");
-    const profileUrl = URL.createObjectURL(employee.img);
-    empProfile.src = profileUrl;
+    empProfile.src = employee.img;
     empProfile.alt = "Profile Picture";
     empProfile.classList.add("employee-profile");
     employeediv.appendChild(empProfile);
@@ -166,8 +166,7 @@ function renderUnassignedEmployees(employee) {
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "X";
     deleteBtn.classList.add("delete-btn");
-    deleteBtn.setAttribute('aria-label', `Supprimer ${employee.nom}`);
-    deleteBtn.addEventListener('click', () => handleDeleteEmployee(employee, employeediv, profileUrl));
+    deleteBtn.addEventListener('click', () => handleDeleteEmployee(employee, employeediv));
     employeediv.appendChild(deleteBtn);
     employeediv.addEventListener('click', () => {
         employeeInfoModal.className = "add-container";
@@ -191,7 +190,7 @@ function renderEmployeeInfo(employee, container) {
     empProfileInfo.classList.add("employee-profile-info");
     empProfileInfo.alt = "Photo de profil";
 
-    empProfileInfo.src = URL.createObjectURL(employee.img);
+    empProfileInfo.src = employee.img;
 
     headerDiv.appendChild(empProfileInfo);
 
@@ -297,8 +296,7 @@ function showEmployeeListModal(btn) {
             departmentEmployeeList.appendChild(employeediv);
 
             const empProfile = document.createElement("img");
-            const profileUrl = URL.createObjectURL(employee.img);
-            empProfile.src = profileUrl;
+            empProfile.src = employee.img;
             empProfile.alt = "Profile Picture";
             empProfile.classList.add("employee-profile");
             employeediv.appendChild(empProfile);
@@ -315,7 +313,10 @@ function showEmployeeListModal(btn) {
             empRole.textContent = employee.role;
             empInfoDiv.appendChild(empRole);
 
-            employeediv.addEventListener('click', () => handleAssignEmployeeToDepartment(employee, employeediv, btn, departmentArray, max, profileUrl));
+            employeediv.addEventListener('click', () => {
+                handleAssignEmployeeToDepartment(employee, employeediv, btn, departmentArray, max);
+                hideModals();
+            });
         }
     });
 }
@@ -333,7 +334,7 @@ function renderDepartments(employee, departmentList) {
     departmentList.appendChild(employeediv);
 
     const empProfile = document.createElement("img");
-    empProfile.src = URL.createObjectURL(employee.img);
+    empProfile.src = employee.img;
     empProfile.alt = "Profile Picture";
     empProfile.classList.add("employee-profile-in-department");
     employeediv.appendChild(empProfile);
@@ -349,6 +350,11 @@ function renderDepartments(employee, departmentList) {
     const empRole = document.createElement("p");
     empRole.textContent = employee.role;
     empInfoDiv.appendChild(empRole);
+
+    employeediv.addEventListener('click', () => {
+        employeeInfoModal.className = "add-container";
+        renderEmployeeInfo(employee, employeeInfoDetailsDiv);
+    });
 }
 
 function hideModals() {
@@ -358,25 +364,19 @@ function hideModals() {
     clearImagePreview();
 }
 
-function handleDeleteEmployee(employee, employeediv, profileUrl) {
-    URL.revokeObjectURL(profileUrl);
+function handleDeleteEmployee(employee, employeediv) {
     unassignedList.removeChild(employeediv);
     const index = employeeArray.indexOf(employee);
-    if (index !== -1) {
-        employeeArray.splice(index, 1);
-    }
+    employeeArray.splice(index, 1);
     console.log(employeeArray);
 }
 
-function handleAssignEmployeeToDepartment(employee, employeediv, btn, departmentArray, max, profileUrl) {
+function handleAssignEmployeeToDepartment(employee, employeediv, btn, departmentArray, max) {
     const department = btn.getAttribute("data-departement");
     employee.department = department;
-    URL.revokeObjectURL(profileUrl);
     departmentEmployeeList.removeChild(employeediv);
     const index = employeeArray.indexOf(employee);
-    if (index !== -1) {
-        employeeArray.splice(index, 1);
-    }
+    employeeArray.splice(index, 1);
 
     const departementContainer = document.getElementById(department);
     const departmentList = departementContainer.querySelector(".employee-list-in-department");
@@ -496,7 +496,7 @@ function handleFormSubmit(e) {
         role: roleSelect.value,
         email: emailInput.value,
         telephone: telephoneInput.value,
-        img: imgInput.files[0],
+        img: imgInput.value.trim(),
         experiences: experiencesArray,
         department: null
     };
@@ -548,4 +548,4 @@ nomInput.addEventListener("input", validateNom);
 emailInput.addEventListener("input", validateEmail);
 telephoneInput.addEventListener("input", validateTelephone);
 roleSelect.addEventListener("change", validateRole);
-imgInput.addEventListener("change", handleImageChange);
+imgInput.addEventListener("input", handleImageChange);
