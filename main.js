@@ -34,7 +34,6 @@ const imgError = document.getElementById("img-error");
 
 // Application State
 
-let experienceCount = 1;
 let employeeArray = [];
 let conferencesArray = [];
 let receptionArray = [];
@@ -247,7 +246,6 @@ function renderEmployeeInfo(employee, container) {
 
 
 function addExperienceForm() {
-    experienceCount++;
 
     const newExperienceDiv = document.createElement("div");
     newExperienceDiv.classList = "experiences-div";
@@ -507,12 +505,13 @@ function handleFormSubmit(e) {
         const endInput = row.querySelector(".end-date");
 
         if (entrepriseInput.value.trim() !== "" && posteInput.value.trim() !== "" && startInput.value.trim() !== "" && endInput.value.trim() !== "") {
-            experiencesArray.push({
+            experience = {
                 entreprise: entrepriseInput.value.trim(),
                 poste: posteInput.value.trim(),
                 startDate: startInput.value.trim(),
                 endDate: endInput.value.trim()
-            });
+            };
+            experiencesArray.push(experience);
         }
     });
 
