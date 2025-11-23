@@ -49,7 +49,7 @@ function validateNom() {
     if (value === "") {
         setFieldError(nomInput, nomError, "Le nom est requis");
         return false;
-    } else if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]{2,}$/.test(value)) {
+    } else if (!/^[A-Za-z\s'-]{2,}$/.test(value)) {
         setFieldError(nomInput, nomError, "Le nom doit contenir au moins 2 lettres");
         return false;
     } else {
