@@ -49,7 +49,7 @@ function validateNom() {
     if (value === "") {
         setFieldError(nomInput, nomError, "Le nom est requis");
         return false;
-    } else if (!/^[A-Za-z\s'-]{2,}$/.test(value)) {
+    } else if (!/^[A-Za-z\s'-]+$/.test(value)) {
         setFieldError(nomInput, nomError, "Le nom doit contenir au moins 2 lettres");
         return false;
     } else {
@@ -87,7 +87,7 @@ function validateTelephone() {
 }
 
 function validateRole() {
-    if (!roleSelect.value) {
+    if (roleSelect.value === "") {
         setFieldError(roleSelect, roleError, "Veuillez sélectionner un rôle");
         return false;
     } else {
@@ -165,8 +165,8 @@ function renderUnassignedEmployees(employee) {
     deleteBtn.textContent = "X";
     deleteBtn.classList.add("delete-btn");
     deleteBtn.addEventListener('click', () => {
-        handleDeleteEmployee(employee, employeediv);
         hideModals();
+        handleDeleteEmployee(employee, employeediv);
     });
     employeediv.appendChild(deleteBtn);
     employeediv.addEventListener('click', () => {
@@ -258,13 +258,18 @@ function addExperienceForm() {
     newPost.classList.add("input-experience", "poste");
     newPost.placeholder = "Poste";
 
-    const newDuree = document.createElement("input");
-    newDuree.classList.add("input-experience", "duree");
-    newDuree.placeholder = "Période (ex: 2020 - 2025)";
+    const newDureeStart = document.createElement("input");
+    newDureeStart.type = "date";
+    newDureeStart.classList.add("input-experience", "start-date");
+
+    const newDureeEnd = document.createElement("input");
+    newDureeEnd.type = "date";
+    newDureeEnd.classList.add("input-experience", "end-date");
 
     newExperienceDiv.appendChild(newEntreprise);
     newExperienceDiv.appendChild(newPost);
-    newExperienceDiv.appendChild(newDuree);
+    newExperienceDiv.appendChild(newDureeStart);
+    newExperienceDiv.appendChild(newDureeEnd);
     experiencesDiv.appendChild(newExperienceDiv);
 }
 
@@ -505,7 +510,7 @@ function handleFormSubmit(e) {
         const endInput = row.querySelector(".end-date");
 
         if (entrepriseInput.value.trim() !== "" && posteInput.value.trim() !== "" && startInput.value.trim() !== "" && endInput.value.trim() !== "") {
-            experience = {
+            const experience = {
                 entreprise: entrepriseInput.value.trim(),
                 poste: posteInput.value.trim(),
                 startDate: startInput.value.trim(),
